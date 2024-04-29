@@ -1,0 +1,23 @@
+### category 1
+GET http://localhost:8080/api/category
+
+### category 2
+GET http://localhost:8080/api/category/{{id}}
+
+### category 3
+POST http://localhost:8080/api/category
+Content-Type: application/json
+
+{
+  "title": "Sample Title",
+  "description": "This is a sample description.",
+  "color": "#FF5733",
+  "icon": "sample_icon.png",
+  "parentId": 123456789,
+  "visible": true
+}
+
+
+### category 4
+POST http://localhost:8080/api/categories
+Content-Type: application/x-www-form-urlencoded

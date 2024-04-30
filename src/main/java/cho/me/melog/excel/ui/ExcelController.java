@@ -38,7 +38,7 @@ public class ExcelController {
     }
 
     /**
-     * 엑셀 다운로드
+     * 엑셀 양식 다운로드
      * */
     @GetMapping("/api/excel/download/{id}")
     public ResponseEntity<Resource> downloadExcel(@PathVariable Long id) {

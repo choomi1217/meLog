@@ -5,6 +5,7 @@ import cho.me.melog.categories.repository.domain.CategoryRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CategoryDao{
@@ -30,5 +31,9 @@ public class CategoryDao{
         Category entity = categoryRepository.findByIdExceptUnviable(category.getId());
         entity.update(category);
         categoryRepository.flush();
+    }
+
+    public Optional<Category> findByTitle(String title) {
+        return categoryRepository.findByTitle(title);
     }
 }

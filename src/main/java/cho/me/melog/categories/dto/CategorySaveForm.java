@@ -3,7 +3,6 @@ package cho.me.melog.categories.dto;
 import cho.me.melog.categories.repository.domain.Category;
 import jakarta.validation.constraints.NotNull;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 
 public class CategorySaveForm {

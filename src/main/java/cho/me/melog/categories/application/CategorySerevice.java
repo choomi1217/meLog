@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -27,14 +28,12 @@ public class CategorySerevice {
     }
 
     public List<Category> categories() {
-        List<Category> categories = categoryDao.findExceptUnviable();
-        return categories;
+        return categoryDao.findExceptInvisible();
     }
 
-    public Long saveOneCategory(CategorySaveForm request) {
+    public Category saveOneCategory(CategorySaveForm request) {
         Category category = request.toDomain();
-        Category save = categoryDao.save(category);
-        return save.getId();
+        return categoryDao.save(category);
     }
 
     public List<Category> saveManyCategory(MultipartFile request) {
@@ -64,17 +63,20 @@ public class CategorySerevice {
         return CategoryDto.of(title, description, color, icon, visible);
     }
 
-    public int getLastCellNum(Sheet sheet) {
-        Row r = sheet.getRow(0);
-        return r.getLastCellNum();
+    public Category findCategoryById(Long id) {
+        return categoryDao.findByIdExceptUnviable(id);
     }
 
-    public CategoryDto findCategoryById(Long id) {
+    @Transactional
+    public Category updateCategory(Long id, CategorySaveForm request) {
         Category category = categoryDao.findByIdExceptUnviable(id);
-        return new CategoryDto(category);
-    }
-
-    public CategoryDto updateCategory(Long id, CategorySaveForm request) {
-        return null;
+        category.updateTitle(request.getTitle())
+                .updateDescription(request.getDescription())
+                .updateColor(request.getColor())
+                .updateIcon(request.getIcon())
+                .updateParentId(request.getParentId())
+                .updateVisible(request.getVisible());
+        categoryDao.update(category);
+        return category;
     }
 }

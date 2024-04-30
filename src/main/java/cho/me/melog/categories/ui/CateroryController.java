@@ -28,12 +28,12 @@ public class CateroryController {
 
     @GetMapping("/api/category/{id}")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable Long id) {
-        CategoryDto response = categoryService.findCategoryById(id);
+        CategoryDto response = new CategoryDto(categoryService.findCategoryById(id));
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/api/category")
-    public ResponseEntity<Long> saveOneCategory(CategorySaveForm request) {
+    public ResponseEntity<Category> saveOneCategory(CategorySaveForm request) {
         return ResponseEntity.ok(categoryService.saveOneCategory(request));
     }
 
@@ -44,8 +44,8 @@ public class CateroryController {
 
     @PutMapping("/api/category/{id}")
     public ResponseEntity<CategoryDto> updateCategory(@PathVariable Long id, CategorySaveForm request) {
-        CategoryDto response = categoryService.updateCategory(id, request);
-        return ResponseEntity.ok(response);
+        Category category = categoryService.updateCategory(id, request);
+        return ResponseEntity.ok(new CategoryDto(category));
     }
 
 }

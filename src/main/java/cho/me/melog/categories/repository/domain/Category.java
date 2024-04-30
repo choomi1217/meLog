@@ -38,6 +38,51 @@ public class Category {
         this.deleted = deleted;
         this.createdAt = createdAt;
     }
+
+    public Category updateTitle(String title){
+        this.title = title;
+        return this;
+    }
+
+    public Category updateDescription(String description){
+        this.description = description;
+        return this;
+    }
+
+    public Category updateColor(String color){
+        this.color = color;
+        return this;
+    }
+
+    public Category updateIcon(String icon){
+        this.icon = icon;
+        return this;
+    }
+
+    public Category updateParentId(Long parentId){
+        this.parentId = parentId;
+        return this;
+    }
+
+    public Category updateVisible(Boolean visible){
+        this.visible = visible;
+        return this;
+    }
+
+    public Category updateDeleted(Boolean deleted){
+        this.deleted = deleted;
+        return this;
+    }
+
+    public void update(Category category) {
+        this.title = category.title;
+        this.description = category.description;
+        this.color = category.color;
+        this.icon = category.icon;
+        this.parentId = category.parentId;
+        this.visible = category.visible;
+        this.deleted = category.deleted;
+    }
 }
 
 

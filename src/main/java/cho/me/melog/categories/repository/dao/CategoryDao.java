@@ -14,8 +14,8 @@ public class CategoryDao{
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> findExceptUnviable() {
-        return categoryRepository.findExceptUnviable();
+    public List<Category> findExceptInvisible() {
+        return categoryRepository.findExceptInvisible();
     }
 
     public Category save(Category category) {
@@ -24,5 +24,11 @@ public class CategoryDao{
 
     public Category findByIdExceptUnviable(Long id) {
         return categoryRepository.findByIdExceptUnviable(id);
+    }
+
+    public void update(Category category) {
+        Category entity = categoryRepository.findByIdExceptUnviable(category.getId());
+        entity.update(category);
+        categoryRepository.flush();
     }
 }

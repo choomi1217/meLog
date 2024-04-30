@@ -7,17 +7,17 @@ import java.time.LocalDateTime;
 
 public class CategoryDto {
     private Long id;
-    @ExcelColumn
+    @ExcelColumn(headerName = "카테고리명")
     private String title;
-    @ExcelColumn
+    @ExcelColumn(headerName = "설명")
     private String description;
-    @ExcelColumn
+    @ExcelColumn(headerName = "색상")
     private String color;
-    @ExcelColumn
+    @ExcelColumn(headerName = "아이콘")
     private String icon;
-    @ExcelColumn
+    @ExcelColumn(headerName = "상위 카테고리 ID")
     private Long parentId;
-    @ExcelColumn
+    @ExcelColumn(headerName = "노출 여부")
     private Boolean visible;
     private Boolean deleted;
     private LocalDateTime createdAt;

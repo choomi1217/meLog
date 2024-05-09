@@ -1,11 +1,11 @@
 package cho.me.melog.excel.application;
 
 import cho.me.melog.excel.dto.ExcelDto;
+import cho.me.melog.excel.dto.ExcelRequest;
 import cho.me.melog.excel.repository.dao.ExcelDao;
 import cho.me.melog.excel.repository.domain.Excel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -39,8 +39,8 @@ public class ExcelService {
                 .toList();
     }
 
-    public ResponseEntity<Resource> downloadExcel(Long id) {
-        Excel excel = excelDao.findById(id);
+    public ResponseEntity<Resource> downloadExcel(ExcelRequest excelRequest) {
+        Excel excel = excelDao.findById(excelRequest.getId());
         String path = excel.getPath();
         String fileName = excel.getTitle();
         Resource resource = new FileSystemResource(path + fileName);

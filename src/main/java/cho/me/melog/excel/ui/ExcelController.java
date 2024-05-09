@@ -1,14 +1,12 @@
 package cho.me.melog.excel.ui;
 
+import cho.me.melog.excel.application.ExcelQueueProcessor;
 import cho.me.melog.excel.application.ExcelService;
 import cho.me.melog.excel.dto.ExcelDto;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.core.io.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,9 +14,11 @@ import java.util.List;
 public class ExcelController {
 
     private final ExcelService excelService;
+    private final ExcelQueueProcessor excelQueueProcessor;
 
-    public ExcelController(ExcelService excelService) {
+    public ExcelController(ExcelService excelService, ExcelQueueProcessor excelQueueProcessor) {
         this.excelService = excelService;
+        this.excelQueueProcessor = excelQueueProcessor;
     }
 
     /**
@@ -39,10 +39,16 @@ public class ExcelController {
 
     /**
      * 엑셀 양식 다운로드
-     * */
+     */
     @GetMapping("/api/excel/download/{id}")
-    public ResponseEntity<Resource> downloadExcel(@PathVariable Long id) {
-        return excelService.downloadExcel(id);
+    public ResponseEntity<String> downloadExcel(@PathVariable Long id, HttpServletRequest request) {
+        boolean queued = excelQueueProcessor.enqueueRequest(id, request);
+        if (queued) {
+            return ResponseEntity.ok("Excel download request queued successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Server is busy, please try again later.");
+        }
+        // return excelService.downloadExcel(id);
     }
 
 }

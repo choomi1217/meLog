@@ -6,6 +6,7 @@ import cho.me.melog.tag.repository.domain.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +22,7 @@ public class ArticleSaveForm {
     private String categoryName;
     private List<String> tagNames;
     private Boolean isPublished;
+    private List<MultipartFile> files;
 
     public Article toEntity(Category category, List<Tag> tags) {
         return Article.builder()

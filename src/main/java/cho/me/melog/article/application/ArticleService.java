@@ -8,6 +8,7 @@ import cho.me.melog.categories.repository.dao.CategoryDao;
 import cho.me.melog.categories.repository.domain.Category;
 import cho.me.melog.tag.repository.dao.TagDao;
 import cho.me.melog.tag.repository.domain.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class ArticleService {
         return articleDao.findAllArticles(pageable).map(Article::toDto);
     }
 
-    public ArticleDto saveArticle(ArticleSaveForm articleSaveForm) {
+    public ArticleDto saveArticle(ArticleSaveForm articleSaveForm, HttpServletRequest request) {
         String categoryName = articleSaveForm.getCategoryName();
         Category category = categoryDao.findByTitle(categoryName).orElseThrow(() -> new IllegalArgumentException("Category not found"));
         List<String> tagNames = articleSaveForm.getTagNames();
@@ -40,6 +41,27 @@ public class ArticleService {
             tags.add(tagDao.findTagByName(tagName).orElseThrow(() -> new IllegalArgumentException("Tag not found")));
         }
         Article article = articleSaveForm.toEntity(category, tags);
+
         return articleDao.save(article).toDto();
+    }
+
+    public ArticleDto findArticle(Long id) {
+        return null;
+    }
+
+    public ArticleDto updateArticle(Long id, ArticleSaveForm articleSaveForm) {
+        return null;
+    }
+
+    /**
+     * 1. ArticleDao를 통해 id에 해당하는 Article을 조회한다.
+     * 2. 조회한 Article이 없다면, IllegalArgumentException을 발생시킨다.
+     * 3. 조회한 Article의 isDeleted를 true로 변경한다.
+     * 4. 변경된 Article을 ArticleDao를 통해 저장한다.
+     * 5. Aritcle과 관련된 첨부파일을 삭제한다.
+     * */
+    public ArticleDto deleteArticle(Long id) {
+
+        return null;
     }
 }

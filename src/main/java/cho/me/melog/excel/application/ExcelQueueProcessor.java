@@ -3,10 +3,12 @@ package cho.me.melog.excel.application;
 import cho.me.melog.excel.dto.ExcelRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+@Service
 public class ExcelQueueProcessor {
     private final BlockingQueue<ExcelRequest> excelQueue = new LinkedBlockingQueue<ExcelRequest>(100);
     private final ExcelService excelService;

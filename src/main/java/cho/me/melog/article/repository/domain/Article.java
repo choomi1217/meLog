@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Builder
@@ -42,6 +43,9 @@ public class Article {
     private Long viewCount;
     private Long likeCount;
     private Long commentCount;
+
+    @OneToMany(mappedBy = "article")
+    private List<AttachedFile> attachedFiles = new ArrayList<>();
 
     public ArticleDto toDto() {
         return ArticleDto.builder()

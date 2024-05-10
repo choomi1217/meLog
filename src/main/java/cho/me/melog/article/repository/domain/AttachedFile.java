@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -17,8 +19,11 @@ public class AttachedFile {
     private Long id;
 
     private String fileName;
-    private String filePath;
+
+    @Lob
+    private byte[] fileData;
     private String fileType;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "article_id")

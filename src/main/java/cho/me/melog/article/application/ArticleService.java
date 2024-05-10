@@ -46,7 +46,8 @@ public class ArticleService {
     }
 
     public ArticleDto findArticle(Long id) {
-        return null;
+        Article articleNotFound = articleDao.findById(id).orElseThrow(() -> new IllegalArgumentException("Article not found"));
+        return articleNotFound.toDto();
     }
 
     public ArticleDto updateArticle(Long id, ArticleSaveForm articleSaveForm) {

@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class ArticleDao {
     private final ArticleRepository articleRepository;
@@ -20,5 +22,9 @@ public class ArticleDao {
 
     public Article save(Article article) {
         return articleRepository.save(article);
+    }
+
+    public Optional<Article> findById(Long id) {
+        return articleRepository.findById(id);
     }
 }

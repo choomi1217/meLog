@@ -44,7 +44,7 @@ public class Article {
     private Long likeCount;
     private Long commentCount;
 
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private List<AttachedFile> attachedFiles = new ArrayList<>();
 
     public ArticleDto toDto() {

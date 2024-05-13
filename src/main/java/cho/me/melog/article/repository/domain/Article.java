@@ -1,6 +1,7 @@
 package cho.me.melog.article.repository.domain;
 
 import cho.me.melog.article.dto.ArticleDto;
+import cho.me.melog.article.dto.ArticleSaveForm;
 import cho.me.melog.categories.repository.domain.Category;
 import cho.me.melog.tag.repository.domain.Tag;
 import jakarta.persistence.*;
@@ -47,23 +48,18 @@ public class Article {
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private List<AttachedFile> attachedFiles = new ArrayList<>();
 
-    public ArticleDto toDto() {
-        return ArticleDto.builder()
-                .id(id)
-                .title(title)
-                .content(content)
-                .thumbnail(thumbnail)
-                .author(author)
-                .category(category)
-                .tags(tags)
-                .createdAt(createdAt)
-                .updatedAt(updatedAt)
-                .isDeleted(isDeleted)
-                .isPublished(isPublished)
-                .publishedAt(publishedAt)
-                .viewCount(viewCount)
-                .likeCount(likeCount)
-                .commentCount(commentCount)
-                .build();
+    public void update(ArticleSaveForm articleSaveForm) {
+        this.title = articleSaveForm.title();
+        this.content = articleSaveForm.content();
+        this.thumbnail = articleSaveForm.thumbnail();
+        this.author = articleSaveForm.author();
+        this.updatedAt = LocalDateTime.now();
+        this.isPublished = articleSaveForm.isPublished();
+        this.publishedAt = articleSaveForm.isPublished() ? LocalDateTime.now() : null;
+    }
+
+    public boolean delete(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+        return isDeleted;
     }
 }

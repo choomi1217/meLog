@@ -3,14 +3,12 @@ package cho.me.melog.article.ui;
 import cho.me.melog.article.application.ArticleService;
 import cho.me.melog.article.dto.ArticleDto;
 import cho.me.melog.article.dto.ArticleSaveForm;
+import cho.me.melog.article.dto.PageDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,8 +24,8 @@ public class ArticleController {
      * 게시글 리스트 조회
      */
     @GetMapping("/api/article")
-    public ResponseEntity<List<ArticleDto>> getArticles(@PageableDefault(page = 1) Pageable pageable) {
-        return ResponseEntity.ok(articleService.findAllArticles(pageable).getContent());
+    public ResponseEntity<PageDto<ArticleDto>> getArticles(@PageableDefault(page = 1) Pageable pageable) {
+        return ResponseEntity.ok(articleService.findAllArticles(pageable));
     }
 
     /**
@@ -57,7 +55,7 @@ public class ArticleController {
     /**
      * 게시글 수정 화면
      */
-    @GetMapping("/api/article/{id}/edit")
+    @PutMapping("/api/article/{id}")
     public String articleEditForm(@PathVariable Long id) {
         return "/article/articleEditForm";
     }
@@ -73,8 +71,8 @@ public class ArticleController {
     /**
      * 게시글 삭제
      */
-    @PostMapping("/api/article/{id}/delete")
-    public ResponseEntity<ArticleDto> deleteArticle(Long id) {
+    @DeleteMapping("/api/article/{id}")
+    public ResponseEntity<Boolean> deleteArticle(@PathVariable Long id) {
         return ResponseEntity.ok(articleService.deleteArticle(id));
     }
 

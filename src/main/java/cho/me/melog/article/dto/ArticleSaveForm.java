@@ -3,27 +3,21 @@ package cho.me.melog.article.dto;
 import cho.me.melog.article.repository.domain.Article;
 import cho.me.melog.categories.repository.domain.Category;
 import cho.me.melog.tag.repository.domain.Tag;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Builder
-@Getter
-@AllArgsConstructor
-public class ArticleSaveForm {
-    private String title;
-    private String content;
-    private String thumbnail;
-    private String author;
-    private String categoryName;
-    private List<String> tagNames;
-    private Boolean isPublished;
-    private List<MultipartFile> files;
-
+public record ArticleSaveForm(
+        String title,
+        String content,
+        String thumbnail,
+        String author,
+        String categoryName,
+        List<String> tagNames,
+        Boolean isPublished,
+        List<MultipartFile> files
+) {
     public Article toEntity(Category category, List<Tag> tags) {
         return Article.builder()
                 .title(title)

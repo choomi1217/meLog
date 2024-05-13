@@ -4,10 +4,7 @@ import cho.me.melog.tag.application.TagService;
 import cho.me.melog.tag.dto.TagDto;
 import cho.me.melog.tag.repository.domain.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,4 +31,10 @@ public class TagController {
     public ResponseEntity<Tag> createTag(@PathVariable String name) {
         return ResponseEntity.ok(tagService.saveTag(name));
     }
+
+    @DeleteMapping("/api/tag")
+    public ResponseEntity<Boolean> deleteTag(@RequestParam String name) {
+        return ResponseEntity.ok(tagService.deleteTag(name));
+    }
+
 }

@@ -29,4 +29,8 @@ public class TagService {
         }
         return tagDao.saveTag(name);
     }
+
+    public Boolean deleteTag(String name) {
+        return tagDao.deleteTag(name);
+    }
 }

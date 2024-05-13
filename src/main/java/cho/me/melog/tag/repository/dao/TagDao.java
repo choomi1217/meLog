@@ -26,4 +26,8 @@ public class TagDao {
     public Tag saveTag(String name) {
         return tagRepository.save(new Tag(name));
     }
+
+    public Boolean deleteTag(String name) {
+        return tagRepository.deleteByName(name) > 0;
+    }
 }
